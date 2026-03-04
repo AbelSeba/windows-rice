@@ -1,0 +1,25 @@
+# ~/.gitconfig — Git config with delta
+# Place at: %USERPROFILE%\.gitconfig (merge with existing)
+
+[core]
+    pager = delta
+    autocrlf = input
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    dark = true
+    side-by-side = true
+    line-numbers = true
+    syntax-theme = Catppuccin Mocha
+
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    lg = log --oneline --graph --decorate -20
+    unstage = reset HEAD --
+    last = log -1 HEAD

@@ -1,0 +1,81 @@
+// Windows Terminal settings — OMArchy look
+// How to apply:
+//   1. Open Windows Terminal
+//   2. Settings (Ctrl+,) → bottom left "Open JSON file"
+//   3. Merge these values into your existing settings.json
+//
+// IMPORTANT: Find the Git Bash GUID in your profiles list and set it as defaultProfile
+{
+    "defaultProfile": "{GIT-BASH-GUID-HERE}",
+    "theme": "dark",
+    "copyOnSelect": true,
+    "trimBlockSelection": true,
+
+    "profiles": {
+        "defaults": {
+            "font": {
+                "face": "MesloLGM Nerd Font",
+                "size": 11,
+                "weight": "normal"
+            },
+            "colorScheme": "Catppuccin Mocha",
+            "opacity": 90,
+            "useAcrylic": true,
+            "acrylicOpacity": 0.9,
+            "padding": "8",
+            "scrollbarState": "hidden",
+            "antialiasingMode": "cleartype",
+            "cursorShape": "filledBox",
+            "bellStyle": "none"
+        },
+        "list": [
+            {
+                "name": "Git Bash",
+                "commandline": "C:\\Program Files\\Git\\bin\\bash.exe --login -i",
+                "icon": "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
+                "startingDirectory": "%USERPROFILE%",
+                "tabTitle": "bash"
+            }
+        ]
+    },
+
+    "schemes": [
+        {
+            "name": "Catppuccin Mocha",
+            "background": "#1E1E2E",
+            "foreground": "#CDD6F4",
+            "cursorColor": "#F5E0DC",
+            "selectionBackground": "#585B70",
+            "black": "#45475A",
+            "red": "#F38BA8",
+            "green": "#A6E3A1",
+            "yellow": "#F9E2AF",
+            "blue": "#89B4FA",
+            "purple": "#F5C2E7",
+            "cyan": "#94E2D5",
+            "white": "#BAC2DE",
+            "brightBlack": "#585B70",
+            "brightRed": "#F38BA8",
+            "brightGreen": "#A6E3A1",
+            "brightYellow": "#F9E2AF",
+            "brightBlue": "#89B4FA",
+            "brightPurple": "#F5C2E7",
+            "brightCyan": "#94E2D5",
+            "brightWhite": "#A6ADC8"
+        }
+    ],
+
+    "actions": [
+        { "command": "paste", "keys": "ctrl+v" },
+        { "command": "copy", "keys": "ctrl+c" },
+        { "command": "find", "keys": "ctrl+shift+f" },
+        { "command": { "action": "splitPane", "split": "horizontal" }, "keys": "ctrl+shift+minus" },
+        { "command": { "action": "splitPane", "split": "vertical" }, "keys": "ctrl+shift+plus" },
+        { "command": { "action": "newTab" }, "keys": "ctrl+shift+t" },
+        { "command": { "action": "closeTab" }, "keys": "ctrl+shift+w" },
+        { "command": { "action": "moveFocus", "direction": "left" }, "keys": "alt+left" },
+        { "command": { "action": "moveFocus", "direction": "right" }, "keys": "alt+right" },
+        { "command": { "action": "moveFocus", "direction": "up" }, "keys": "alt+up" },
+        { "command": { "action": "moveFocus", "direction": "down" }, "keys": "alt+down" }
+    ]
+}

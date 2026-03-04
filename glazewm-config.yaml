@@ -1,0 +1,274 @@
+# GlazeWM Config — OMArchy-mapped keybinds
+# Place at: %userprofile%\.glzr\glazewm\config.yaml
+#
+# Keybind philosophy: Mirror OMArchy/Hyprland as closely as possible.
+# Windows reserves some Win key combos (Win+L, Win+E, Win+D) — those are untouchable.
+# We use "lwin" (left Windows key) as the Super modifier.
+
+general:
+  # Launch Yasb on startup (comment out if using Zebar instead)
+  startup_commands: ['shell-exec yasb']
+  shutdown_commands: ['shell-exec taskkill /IM yasb.exe /F']
+  config_reload_commands: []
+
+  # Like Hyprland's focus_follows_mouse
+  focus_follows_cursor: false
+
+  toggle_workspace_on_refocus: false
+
+  cursor_jump:
+    enabled: true
+    trigger: 'monitor_focus'
+
+  hide_method: 'cloak'
+  show_all_in_taskbar: false
+
+# ── Gaps (OMArchy defaults: ~5px inner, ~10px outer) ──────────────────
+gaps:
+  scale_with_dpi: true
+  # Hyprland default gaps_in = 5, gaps_out = 10
+  inner_gap: '5px'
+  outer_gap:
+    top: '40px'    # Space for Yasb status bar
+    right: '10px'
+    bottom: '10px'
+    left: '10px'
+
+# ── Window effects (Win11 only) ──────────────────────────────────────
+window_effects:
+  focused_window:
+    border:
+      enabled: true
+      color: '#89b4fa'  # Catppuccin blue — change to match your pywal
+    hide_title_bar:
+      enabled: true     # Cleaner look, like Hyprland (no decorations)
+    corner_style:
+      enabled: true
+      style: 'square'   # Sharp corners like Hyprland
+    transparency:
+      enabled: false
+
+  other_windows:
+    border:
+      enabled: true
+      color: '#45475a'  # Catppuccin surface1 — subtle
+    hide_title_bar:
+      enabled: true
+    corner_style:
+      enabled: true
+      style: 'square'
+    transparency:
+      enabled: false
+
+# ── Window behavior ──────────────────────────────────────────────────
+window_behavior:
+  initial_state: 'tiling'
+  state_defaults:
+    floating:
+      centered: true
+      shown_on_top: false
+    fullscreen:
+      maximized: false
+      shown_on_top: false
+
+# ── Workspaces (OMArchy uses Super+1 through Super+4, we do 1-9) ────
+workspaces:
+  - name: '1'
+    display_name: '一'
+  - name: '2'
+    display_name: '二'
+  - name: '3'
+    display_name: '三'
+  - name: '4'
+    display_name: '四'
+  - name: '5'
+    display_name: '五'
+  - name: '6'
+    display_name: '六'
+  - name: '7'
+    display_name: '七'
+  - name: '8'
+    display_name: '八'
+  - name: '9'
+    display_name: '九'
+
+# ── Window rules ─────────────────────────────────────────────────────
+window_rules:
+  - commands: ['ignore']
+    match:
+      - window_process: { equals: 'yasb' }
+      - window_process: { equals: 'zebar' }
+      - window_process: { equals: 'Flow.Launcher' }
+      - window_title: { regex: '[Pp]icture.in.[Pp]icture' }
+        window_class: { regex: 'Chrome_WidgetWin_1|MozillaDialogClass' }
+      - window_process: { equals: 'PowerToys' }
+        window_class: { regex: 'HwndWrapper\[PowerToys\.PowerAccent.*?\]' }
+      - window_title: { equals: 'Command Palette' }
+        window_class: { equals: 'WinUIDesktopWin32WindowClass' }
+
+# ── Resize mode (like Hyprland submap) ───────────────────────────────
+binding_modes:
+  - name: 'resize'
+    keybindings:
+      - commands: ['resize --width -2%']
+        bindings: ['left']
+      - commands: ['resize --width +2%']
+        bindings: ['right']
+      - commands: ['resize --height +2%']
+        bindings: ['up']
+      - commands: ['resize --height -2%']
+        bindings: ['down']
+      - commands: ['wm-disable-binding-mode --name resize']
+        bindings: ['escape', 'enter']
+
+# ══════════════════════════════════════════════════════════════════════
+# KEYBINDINGS — Mapped from OMArchy/Hyprland
+# ══════════════════════════════════════════════════════════════════════
+keybindings:
+
+  # ── Navigation (Super + Arrow = focus direction) ───────────────────
+  # OMArchy: Super + Arrow → move focus
+  - commands: ['focus --direction left']
+    bindings: ['lwin+left']
+  - commands: ['focus --direction right']
+    bindings: ['lwin+right']
+  - commands: ['focus --direction up']
+    bindings: ['lwin+up']
+  - commands: ['focus --direction down']
+    bindings: ['lwin+down']
+
+  # ── Move windows (Super + Shift + Arrow = swap window) ─────────────
+  # OMArchy: Super + Shift + Arrow → swap window direction
+  - commands: ['move --direction left']
+    bindings: ['lwin+shift+left']
+  - commands: ['move --direction right']
+    bindings: ['lwin+shift+right']
+  - commands: ['move --direction up']
+    bindings: ['lwin+shift+up']
+  - commands: ['move --direction down']
+    bindings: ['lwin+shift+down']
+
+  # ── Window actions ─────────────────────────────────────────────────
+  # OMArchy: Super + W → close window
+  - commands: ['close']
+    bindings: ['lwin+w']
+
+  # OMArchy: Super + T → toggle tiling/floating
+  - commands: ['toggle-floating --centered']
+    bindings: ['lwin+t']
+
+  # OMArchy: Super + F → fullscreen
+  - commands: ['toggle-fullscreen']
+    bindings: ['lwin+f']
+
+  # OMArchy: Super + O → toggle floating on top (sticky)
+  - commands: ['toggle-floating']
+    bindings: ['lwin+o']
+
+  # ── Resize (Super + =/- like OMArchy) ──────────────────────────────
+  # OMArchy: Super + = → grow left, Super + - → grow right
+  - commands: ['resize --width +2%']
+    bindings: ['lwin+oem_plus']
+  - commands: ['resize --width -2%']
+    bindings: ['lwin+oem_minus']
+  # OMArchy: Super + Shift + =/- → grow height
+  - commands: ['resize --height +2%']
+    bindings: ['lwin+shift+oem_plus']
+  - commands: ['resize --height -2%']
+    bindings: ['lwin+shift+oem_minus']
+
+  # Resize mode (enter with Super + R)
+  - commands: ['wm-enable-binding-mode --name resize']
+    bindings: ['lwin+r']
+
+  # ── Workspaces (Super + 1-9) ───────────────────────────────────────
+  # OMArchy: Super + 1/2/3/4 → jump to workspace
+  - commands: ['focus --workspace 1']
+    bindings: ['lwin+1']
+  - commands: ['focus --workspace 2']
+    bindings: ['lwin+2']
+  - commands: ['focus --workspace 3']
+    bindings: ['lwin+3']
+  - commands: ['focus --workspace 4']
+    bindings: ['lwin+4']
+  - commands: ['focus --workspace 5']
+    bindings: ['lwin+5']
+  - commands: ['focus --workspace 6']
+    bindings: ['lwin+6']
+  - commands: ['focus --workspace 7']
+    bindings: ['lwin+7']
+  - commands: ['focus --workspace 8']
+    bindings: ['lwin+8']
+  - commands: ['focus --workspace 9']
+    bindings: ['lwin+9']
+
+  # OMArchy: Super + Shift + 1-9 → move window to workspace (+ follow)
+  - commands: ['move --workspace 1', 'focus --workspace 1']
+    bindings: ['lwin+shift+1']
+  - commands: ['move --workspace 2', 'focus --workspace 2']
+    bindings: ['lwin+shift+2']
+  - commands: ['move --workspace 3', 'focus --workspace 3']
+    bindings: ['lwin+shift+3']
+  - commands: ['move --workspace 4', 'focus --workspace 4']
+    bindings: ['lwin+shift+4']
+  - commands: ['move --workspace 5', 'focus --workspace 5']
+    bindings: ['lwin+shift+5']
+  - commands: ['move --workspace 6', 'focus --workspace 6']
+    bindings: ['lwin+shift+6']
+  - commands: ['move --workspace 7', 'focus --workspace 7']
+    bindings: ['lwin+shift+7']
+  - commands: ['move --workspace 8', 'focus --workspace 8']
+    bindings: ['lwin+shift+8']
+  - commands: ['move --workspace 9', 'focus --workspace 9']
+    bindings: ['lwin+shift+9']
+
+  # OMArchy: Super + Tab → next workspace
+  - commands: ['focus --next-workspace']
+    bindings: ['lwin+tab']
+  # OMArchy: Super + Shift + Tab → previous workspace
+  - commands: ['focus --prev-workspace']
+    bindings: ['lwin+shift+tab']
+
+  # ── Launch apps ────────────────────────────────────────────────────
+  # OMArchy: Super + Return → terminal
+  - commands: ['shell-exec wt']
+    bindings: ['lwin+enter']
+
+  # OMArchy: Super + Shift + Return → browser
+  - commands: ['shell-exec firefox']
+    bindings: ['lwin+shift+enter']
+
+  # ── WM control ─────────────────────────────────────────────────────
+  # Reload config
+  - commands: ['wm-reload-config']
+    bindings: ['lwin+shift+r']
+
+  # Redraw
+  - commands: ['wm-redraw']
+    bindings: ['lwin+shift+w']
+
+  # Pause WM (toggle)
+  - commands: ['wm-toggle-pause']
+    bindings: ['lwin+shift+p']
+
+  # Exit GlazeWM
+  - commands: ['wm-exit']
+    bindings: ['lwin+shift+e']
+
+  # Toggle tiling direction
+  - commands: ['toggle-tiling-direction']
+    bindings: ['lwin+v']
+
+  # Minimize
+  - commands: ['toggle-minimized']
+    bindings: ['lwin+m']
+
+  # Move workspace to other monitor (Super + Shift + Alt + Arrow)
+  - commands: ['move-workspace --direction left']
+    bindings: ['lwin+shift+alt+left']
+  - commands: ['move-workspace --direction right']
+    bindings: ['lwin+shift+alt+right']
+  - commands: ['move-workspace --direction up']
+    bindings: ['lwin+shift+alt+up']
+  - commands: ['move-workspace --direction down']
+    bindings: ['lwin+shift+alt+down']
