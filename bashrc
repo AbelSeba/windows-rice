@@ -1,48 +1,32 @@
-# ~/.bashrc — Git Bash config (OMArchy-inspired)
-# Place at: %USERPROFILE%\.bashrc
-# Git Bash loads this automatically on startup
+# ~/.bashrc — MSYS2 config (OMArchy-inspired)
+# Place at: C:/msys64/home/<user>/.bashrc
+# Also symlink to %USERPROFILE%\.bashrc for consistency
 
 # ── Starship (prompt) ────────────────────────────────────────────────
 eval "$(starship init bash)"
 
-# ── Modern CLI tools (installed via winget) ──────────────────────────
-# bat → better cat
+# ── Modern CLI tools ─────────────────────────────────────────────────
 alias cat='bat --paging=never'
-
-# eza → better ls
 alias ls='eza --icons'
 alias ll='eza -la --icons --git'
 alias la='eza -a --icons'
 alias lt='eza --tree --level=2 --icons'
-
-# ripgrep → better grep
 alias grep='rg'
-
-# fd → better find
-alias find='fd'
 
 # ── Zoxide (smart cd) ────────────────────────────────────────────────
 eval "$(zoxide init bash)"
-# Usage: z <partial-path> → jumps to most used matching dir
 
 # ── fzf (fuzzy finder) ───────────────────────────────────────────────
 eval "$(fzf --bash)"
-# Ctrl+R = fuzzy history search
-# Ctrl+T = fuzzy file search
-# Alt+C  = fuzzy cd into directory
 
-# ── Navigation shortcuts ─────────────────────────────────────────────
+# ── Navigation ───────────────────────────────────────────────────────
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-
-# ── Utility aliases ──────────────────────────────────────────────────
 alias c='clear'
 alias h='history'
 alias q='exit'
 alias mk='mkdir -p'
-
-# Quick dir creation + cd
 mkcd() { mkdir -p "$1" && cd "$1"; }
 
 # ── Git shortcuts ────────────────────────────────────────────────────
@@ -55,44 +39,30 @@ alias gl='git log --oneline --graph --decorate -20'
 alias gd='git diff'
 alias gco='git checkout'
 
-# ── Git delta (better diff) ──────────────────────────────────────────
-# Add to ~/.gitconfig:
-#   [core]
-#     pager = delta
-#   [interactive]
-#     diffFilter = delta --color-only
-#   [delta]
-#     navigate = true
-#     dark = true
-#     side-by-side = true
-
-# ── Windows-specific helpers ─────────────────────────────────────────
-# Open file/folder in Explorer
+# ── Windows helpers ──────────────────────────────────────────────────
 alias open='explorer.exe'
-
-# Open VS Code (if installed)
-alias code='code.exe'
-
-# Clipboard (works in Git Bash)
 alias pbcopy='clip.exe'
-alias pbpaste='powershell.exe Get-Clipboard'
+alias pbpaste='powershell.exe -c Get-Clipboard'
 
-# ── SSH agent auto-start ─────────────────────────────────────────────
-env=~/.ssh/agent.env
-agent_load_env() { test -f "$env" && . "$env" >| /dev/null; }
-agent_start() {
-    (umask 077; ssh-agent > "$env")
-    . "$env" >| /dev/null
+# ── SSH agent ────────────────────────────────────────────────────────
+export SSH_AUTH_SOCK="$HOME/.ssh/agent.sock"
+
+ssh_agent_start() {
+    # Kill stale socket
+    rm -f "$SSH_AUTH_SOCK"
+    eval $(ssh-agent -a "$SSH_AUTH_SOCK") > /dev/null
+    ssh-add ~/.ssh/id_ed25519 2>/dev/null
 }
-agent_load_env
-agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-if [ ! "$SSH_AUTH_SOCK" ] || [ "$agent_run_state" = 2 ]; then
-    agent_start
-    ssh-add 2>/dev/null
-elif [ "$SSH_AUTH_SOCK" ] && [ "$agent_run_state" = 1 ]; then
-    ssh-add 2>/dev/null
+
+# Check if agent is alive
+if ! ssh-add -l &>/dev/null; then
+    ssh_agent_start
 fi
-unset env
+
+# ── PATH: add Windows tools via Scoop ────────────────────────────────
+export PATH="$HOME/scoop/shims:$PATH"
+# Add Windows user bin if needed
+export PATH="/c/Users/$(whoami)/AppData/Local/Programs/oh-my-posh/bin:$PATH"
 
 # ── Clean startup ────────────────────────────────────────────────────
 clear

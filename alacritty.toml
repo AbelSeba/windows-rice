@@ -1,5 +1,5 @@
 [shell]
-program = "C:/Program Files/Git/bin/bash.exe"
+program = "C:/msys64/usr/bin/bash.exe"
 args = ["--login", "-i"]
 
 [window]
