@@ -2,8 +2,8 @@
 # Place at: %USERPROFILE%\.bashrc
 # Git Bash loads this automatically on startup
 
-# ── Oh My Posh (prompt) ──────────────────────────────────────────────
-eval "$(oh-my-posh init bash --config ~/AppData/Local/Programs/oh-my-posh/themes/catppuccin_mocha.omp.json)"
+# ── Starship (prompt) ────────────────────────────────────────────────
+eval "$(starship init bash)"
 
 # ── Modern CLI tools (installed via winget) ──────────────────────────
 # bat → better cat

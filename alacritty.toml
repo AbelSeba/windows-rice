@@ -1,0 +1,40 @@
+[shell]
+program = "C:/Program Files/Git/bin/bash.exe"
+args = ["--login", "-i"]
+
+[window]
+padding = { x = 8, y = 8 }
+decorations = "None"
+opacity = 0.95
+
+[font]
+size = 11.0
+[font.normal]
+family = "MesloLGM Nerd Font"
+[font.bold]
+family = "MesloLGM Nerd Font"
+
+# Catppuccin Latte
+[colors.primary]
+background = "#eff1f5"
+foreground = "#4c4f69"
+
+[colors.normal]
+black = "#5c5f77"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#acb0be"
+
+[colors.bright]
+black = "#6c6f85"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#bcc0cc"
